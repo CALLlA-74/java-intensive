@@ -1,5 +1,7 @@
 package userapp.internal.domain.user.dto;
 
+import userapp.internal.domain.user.model.User;
+
 public class UpdateUser {
     private String id;
     private String name;
@@ -27,5 +29,16 @@ public class UpdateUser {
 
     public Integer getAge() {
         return age;
+    }
+
+    public boolean Equals(Object obj) {
+        if (obj instanceof UpdateUser) {
+            User u = (User) obj;
+            return u.getName().equals(getName()) &&
+                u.getId().equals(getId()) &&
+                u.getEmail().equals(getEmail()) &&
+                u.getAge().equals(getAge());
+        }
+        return false;
     }
 }

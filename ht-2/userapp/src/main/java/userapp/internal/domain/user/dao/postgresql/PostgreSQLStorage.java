@@ -31,7 +31,7 @@ public class PostgreSQLStorage implements IUserDAO {
     public User get(String id) throws DomainException {
         try (Session s = PSQLSessionFactory.getSessionFactory().openSession()) {
             return getUserStorage(s, id).toDomain();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             throw new DomainException(e.getMessage());
         }
     }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import userapp.internal.controllers.cli.IUserUC;
 import userapp.internal.domain.exceptions.DomainException;
-import userapp.internal.domain.exceptions.Exceps;
+import userapp.internal.domain.exceptions.Excepts;
 import userapp.internal.domain.usecases.User.dto.CreateUserInput;
 import userapp.internal.domain.usecases.User.dto.UpdateUserInput;
 import userapp.internal.domain.user.dto.CreateUser;
@@ -37,7 +37,7 @@ public class UserUC implements IUserUC {
     public void updateUser(UpdateUserInput req) throws DomainException {
         try {
             if (userService.getUser(req.getId()) == null) {
-                throw Exceps.notFountException;
+                throw Excepts.notFountException;
             }
         } catch (DomainException exception) {
             throw exception;
@@ -45,8 +45,8 @@ public class UserUC implements IUserUC {
 
         userService.updateUser(
             new UpdateUser(
-                req.getId(), 
-                req.getName(), 
+                req.getId(),
+                req.getName(),
                 req.getEmail(),
                 req.getAge()
             )
@@ -58,6 +58,8 @@ public class UserUC implements IUserUC {
     }
 
     public List<User> pagination(int page, int size) throws DomainException {
+        page = Math.max(0, page);
+        size = Math.max(1, size);
         return userService.getList(page, size);
     }
 }

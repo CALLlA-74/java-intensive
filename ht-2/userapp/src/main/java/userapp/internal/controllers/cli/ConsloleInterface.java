@@ -20,7 +20,7 @@ public class ConsloleInterface {
 
     public ConsloleInterface(IUserUC userUC) {
         this.userUC = userUC;
-        faker = new Faker(new Locale("RU-ru"));
+        faker = new Faker(Locale.US);
     }
 
     public void runMainMenu() {
@@ -29,6 +29,7 @@ public class ConsloleInterface {
             while (true) {
                 if (!flushOutAndPrintUsers()) {
                     exit();
+                    return;
                 }
                 printMainMenu();
 
@@ -36,6 +37,7 @@ public class ConsloleInterface {
                 switch (cmd) {
                     case 0:
                         exit();
+                        return;
                     case 1:
                         currentPage++;
                         break;
@@ -78,6 +80,7 @@ public class ConsloleInterface {
         try {
             users = userUC.pagination(currentPage, pageSize);
         } catch (DomainException e) {
+            System.out.println(e.toString());
             System.out.println(e.getStackTrace());
             return false;
         }
@@ -105,11 +108,7 @@ public class ConsloleInterface {
             if (num > 0) {
                 for (int i = 0; i < num; i++) {
                     try {
-                        CreateUserInput req = new CreateUserInput(
-                            faker.name().name(),
-                            faker.internet().emailAddress(),
-                            Integer.valueOf(faker.number().numberBetween(20, 35))
-                        );
+                        CreateUserInput req = CreateUserInput.generate(faker);
                         userUC.createUser(req);
                     } catch (DomainException e) {
                         // TODO add log

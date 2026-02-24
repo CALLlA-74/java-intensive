@@ -36,4 +36,16 @@ public class User {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public boolean Equals(Object obj) {
+        if (obj instanceof User) {
+            User u = (User) obj;
+            return u.getName().equals(getName()) &&
+                u.getId().equals(getId()) &&
+                u.getEmail().equals(getEmail()) &&
+                u.getAge().equals(getAge()) &&
+                u.getCreatedAt().equals(getCreatedAt());
+        }
+        return false;
+    }
 }

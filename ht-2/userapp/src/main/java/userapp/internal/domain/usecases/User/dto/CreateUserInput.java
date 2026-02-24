@@ -1,5 +1,7 @@
 package userapp.internal.domain.usecases.User.dto;
 
+import com.github.javafaker.Faker;
+
 public class CreateUserInput {
     private String name;
     private String email; 
@@ -21,5 +23,13 @@ public class CreateUserInput {
 
     public Integer getAge() {
         return age;
+    }
+
+    public static CreateUserInput generate(Faker faker) {
+        return new CreateUserInput(
+            faker.name().name(),
+            faker.internet().emailAddress(),
+            Integer.valueOf(faker.number().numberBetween(20, 35))
+        );
     }
 }
